@@ -4,7 +4,7 @@ pipeline {
     agent none
 
     environment {
-        IMAGE_NAME_API = "macnaer/gosell_api"
+        IMAGE_NAME_API = "macnaer/gosell_back"
         IMAGE_NAME_FRONT = "macnaer/gosell_front"
     }
 
@@ -22,12 +22,6 @@ pipeline {
                         .
                     cd ..    
                 """
-            }
-        }
-
-        stage("Approval for Production") {
-            steps {
-                input message: "Deploy GoSell v${env.BUILD_NUMBER} to production?", ok: "Deploy"
             }
         }
 
