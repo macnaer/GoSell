@@ -34,15 +34,17 @@ pipeline {
         stage("Deploy GoSell on remote server") {
             agent { label 'Agent001' }
             steps {
-                echo "Deploying GoSell v${env.BUILD_NUMBER} on remote server ..."                    sh """
-
+               echo "Deploying GoSell on remote server ..."  
+               { 
+                sh """
                         docker compose down --remove-orphans || true
 
                         IMAGE_TAG=${env.BUILD_NUMBER} docker compose up -d
                         docker image prune -f
-                    """
+                """
                 }
             }
+        }
 
     }
 }
