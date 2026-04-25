@@ -10,7 +10,7 @@ pipeline {
 
     stages {
 
-        stage("Build Kraken-AI image") {
+        stage("Build GoSell API image") {
             agent { label 'Agent001' }
             steps {
                 echo 'Building GoSell image ...'
@@ -24,6 +24,22 @@ pipeline {
                 """
             }
         }
+
+        stage("Build GoSell Front image") {
+            agent { label 'Agent001' }
+            steps {
+                echo 'Building GoSell image ...'
+                sh """
+                    cd OLX.Frontend
+                    docker build --no-cache \
+                        -t ${IMAGE_NAME_FRONT}:${env.BUILD_NUMBER} \
+                        -t ${IMAGE_NAME_FRONT}:latest \
+                        .
+                    cd ..    
+                """
+            }
+        }
+
 
         stage("Deploy GoSell on remote server") {
             agent { label 'Agent001' }
